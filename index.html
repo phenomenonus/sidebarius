@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta
+      name="description"
+      content="Sidebarius is a JavaScript tool for creating a sticky sidebar that adapts to scroll movements. This
+        allows for dynamic interfaces with elements that stay in view as the user scrolls the page."
+    />
+    <meta name="keywords" content="JavaScript, sticky sidebar, UI, web development, Sidebarius" />
+    <meta name="repository" content="https://github.com/phenomenonus/sidebarius" />
+    <meta name="author" content="Mikhail Prugov" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Sidebarius</title>
+  </head>
+  <body>
+    <header>
+      <h1>Demo</h1>
+
+      <p class="desk">
+        <b>Sidebarius</b> is a JavaScript tool for creating a "sticky" sidebar that adapts to scroll movements. This
+        allows for dynamic interfaces with elements that stay in view as the user scrolls the page.
+      </p>
+    </header>
+
+    <ul class="desk-list">
+      <li>Lightweight: <b>sidebarius.iife.min.js</b>(≈3.3KB) or <b>sidebarius.esm.min.js</b>(≈3.25KB)</li>
+      <li>No dependencies</li>
+      <li>
+        <a href="https://github.com/phenomenonus/sidebarius">GitHub repository ↗️</a>
+      </li>
+      <li><a href="https://www.npmjs.com/package/sidebarius">NPM package ↗️</a></li>
+    </ul>
+
+    <main>
+      <aside id="container" style="width: 220px; margin-right: 0.5rem; flex-shrink: 0">
+        <div
+          id="container_inner"
+          style="padding: 0.25rem; border: 2px solid black; overflow: hidden; border-radius: 4px"
+        >
+          <div class="darkness" style="min-height: 200px">
+            <button class="activator enabled" type="button">Disable Sidebarius</button>
+            <div class="status" translate="no"></div>
+          </div>
+
+          <button class="toggle-btn" type="button">Expand ⌄</button>
+          <div class="roller"></div>
+          <div class="expand-block">
+            <div class="darkness">
+              <hr />
+              <p>
+                The <b>Container</b> cannot use the CSS property <code>padding</code>. It must be set to
+                <code>0</code> to maintain proper functionality.
+              </p>
+              <hr />
+              <p>
+                The <b>ContainerInner</b> cannot use the CSS property <code>margin</code>. It must be set to
+                <code>0</code> to ensure correct positioning and behavior.
+              </p>
+              <hr />
+              <p>
+                The <b>Container</b> does not prevent changes in width of the <b>ContainerInner</b>; instead, it
+                inherits its width from the <b>Container</b> when in the state of <b>ColliderTop</b> or
+                <b>ColliderBottom</b>.
+              </p>
+              <hr />
+              <p>
+                In a <b>React</b> environment, be sure to call <code>stop()</code> when unmounting the component to
+                prevent memory leaks and unintended behavior.
+              </p>
+              <hr />
+              <p>
+                Multiple instances of <b>Sidebarius</b> can be used simultaneously, allowing for individual sticky
+                behaviors across different sections for various scenarios.
+              </p>
+              <hr />
+              <p>
+                For the <b>ContainerInner</b>, the <b>Container</b> serves as a guide, within which it can move, and it
+                cannot exceed the boundaries set by the <b>Container</b>.
+              </p>
+              <hr />
+              <center style="margin-block: 1rem">
+                <a href="https://www.npmjs.com/package/sidebarius" style="color: inherit">More info ↗️</a>
+              </center>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section>
+        <ul class="brand">
+          <li class="darkness" style="transform: rotate(-12deg)">S</li>
+          <li class="darkness" style="transform: rotate(-4deg)">I</li>
+          <li class="darkness" style="transform: rotate(7deg)">D</li>
+          <li class="darkness" style="transform: rotate(-9deg)">E</li>
+          <li class="darkness" style="transform: rotate(-3deg)">B</li>
+          <li class="darkness" style="transform: rotate(5deg)">A</li>
+          <li class="darkness" style="transform: rotate(-1deg)">R</li>
+          <li class="darkness" style="transform: rotate(-3deg)">I</li>
+          <li class="darkness" style="transform: rotate(7deg)">U</li>
+          <li class="darkness" style="transform: rotate(-5deg)">S</li>
+        </ul>
+      </section>
+    </main>
+    <footer class="darkness">
+      <div>
+        <a
+          href="https://fonts.adobe.com/fonts/courier-new"
+          target="_blank"
+          style="color: #fefefe"
+          rel="noopener noreferrer"
+          >Courier New</a
+        >, designed by Adrian Frutiger and Howard Kettler.
+      </div>
+    </footer>
+
+    <script type="module">
+      import Sidebarius from './sidebarius.esm.min.js';
+
+      const statusBar = document.querySelector('.status');
+
+      const callback = (state, direction, strategy) => {
+        const states = ['None', 'ContainerBottom', 'ColliderTop', 'ColliderBottom', 'TranslateY', 'Rest'];
+        const directions = ['None', 'Down', 'Up'];
+        const strategies = ['None', 'Both', 'Top'];
+        statusBar.innerHTML = `
+        <small><span>STATE:</span><code>${states[state]}</code></small>
+        <small><span>DIRECTION:</span> <code>${directions[direction]}</code></small>
+        <small><span>STRATEGY:</span> <code>${strategies[strategy]}</code></small>`;
+      };
+
+      const sidebarius = new Sidebarius(
+        document.getElementById('container'),
+        document.getElementById('container_inner'),
+        16,
+        16,
+        callback,
+      );
+
+      sidebarius.start();
+
+      // Code for demonstration of activation Sidebarius manualy
+      document.querySelector('.activator').addEventListener('click', (e) => {
+        if (e.target.classList.contains('enabled')) {
+          e.target.innerHTML = 'Enable Sidebarius';
+          e.target.classList.remove('enabled');
+          sidebarius.stop();
+        } else {
+          e.target.innerHTML = 'Disable Sidebarius';
+          e.target.classList.add('enabled');
+          sidebarius.start();
+        }
+      });
+
+      // Code for demonstration different sizes of Sidebar
+      const expandBlock = document.querySelector('.expand-block');
+      document.querySelector('.toggle-btn').addEventListener('click', (e) => {
+        if (expandBlock.classList.contains('expanded')) {
+          e.target.innerHTML = 'Expand ⌄';
+          expandBlock.classList.remove('expanded');
+          expandBlock.style.maxHeight = 0;
+        } else {
+          e.target.innerHTML = 'Collapse ⌃';
+          expandBlock.classList.add('expanded');
+          expandBlock.style.maxHeight = expandBlock.scrollHeight + 'px';
+        }
+      });
+    </script>
+  </body>
+</html>
