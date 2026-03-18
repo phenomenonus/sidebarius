@@ -2,7 +2,7 @@
 
 /**
  * Sidebarius
- * @version 1.0.0
+ * @version 1.0.1
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026

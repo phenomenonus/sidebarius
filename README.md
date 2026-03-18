@@ -1,8 +1,9 @@
 # Sidebarius
 
-[![npm version](https://badge.fury.io/js/sidebarius.svg)](https://www.npmjs.com/package/sidebarius)
-[![Npm package total downloads](https://badgen.net/npm/dt/sidebarius)](https://www.npmjs.com/package/sidebarius)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![NPM License](https://img.shields.io/npm/l/sidebarius)](./LICENSE)
+[![NPM version](https://badge.fury.io/js/sidebarius.svg)](https://github.com/phenomenonus/sidebarius)
+![NPM downloads (total)](https://badgen.net/npm/dt/sidebarius)
+![NPM Downloads (montly)](https://img.shields.io/npm/dm/sidebarius)
 
 **Sidebarius** is a **lightweight**, **dependency-free** JavaScript tool for creating a "sticky" sidebar that adapts to scroll movements. This allows for dynamic interfaces with elements that stay in view as the user scrolls the page.
 
@@ -16,6 +17,8 @@
   - [React Typescript](#react-typescript)
 - [API](#api)
 - [Limitations](#limitations)
+- [Development](#development)
+  - [Commit Message Guidelines](#commit-message-guidelines)
 - [Links](#links)
 - [Copyright and license](#copyright-and-license)
 
@@ -224,6 +227,28 @@ Defines the sticky behavior strategy.
 ![Strategy](./assets/strategy.jpg)
 
 > [Strategy](#strategy)
+
+---
+
+## Development
+
+### Commit Message Guidelines
+
+- **feat** - new feature
+- **fix** - bug fix
+- **docs** - documentation
+- **style** - formatting, whitespace, no code logic changes
+- **refactor** - code refactoring
+- **test** - adding/changing tests
+- **chore** - minor tasks, build process, configuration
+
+**Examples:**
+
+```bash
+git commit -m "feat: add setSpaces to set top and bottom collider spaces"
+# Or
+git commit -m "docs: add API usage examples"
+```
 
 ---
 
