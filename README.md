@@ -1,7 +1,7 @@
 # Sidebarius
 
 [![NPM License](https://img.shields.io/npm/l/sidebarius)](./LICENSE)
-[![NPM version](https://badge.fury.io/js/sidebarius.svg)](https://github.com/phenomenonus/sidebarius)
+[![NPM version](https://badge.fury.io/js/sidebarius.svg)](https://www.npmjs.com/package/sidebarius)
 ![NPM downloads (total)](https://badgen.net/npm/dt/sidebarius)
 ![NPM Downloads (montly)](https://img.shields.io/npm/dm/sidebarius)
 

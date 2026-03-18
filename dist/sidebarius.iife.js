@@ -3,7 +3,7 @@ var Sidebarius = (function () {
 
     /**
      * Sidebarius
-     * @version 1.0.1
+     * @version 1.0.2
      * @link https://github.com/phenomenonus/sidebarius
      * @author Mikhail Prugov
      * @copyright 2026
