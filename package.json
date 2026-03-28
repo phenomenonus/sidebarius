@@ -4,6 +4,7 @@
   "description": "Sidebarius is a lightweight JavaScript tool that makes sidebars sticky and scrollable. It is independent of any third-party libraries.",
   "author": "Mikhail Prugov <mikhail.prugov@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "main": "dist/sidebarius.cjs.js",
   "module": "dist/sidebarius.esm.js",
   "browser": "dist/sidebarius.iife.js",
@@ -12,8 +13,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "deploy": "gh-pages -d demo"
+    "build": "rollup -c"
   },
   "keywords": [
     "frontend",
@@ -36,10 +36,9 @@
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^25.5.0",
-    "gh-pages": "^6.3.0",
-    "rollup": "^4.59.0",
-    "rollup-plugin-dts": "^6.4.0",
+    "rollup": "^4.60.0",
+    "rollup-plugin-dts": "^6.4.1",
     "tslib": "^2.8.1",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   }
 }
