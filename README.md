@@ -5,20 +5,22 @@
 ![NPM downloads (total)](https://badgen.net/npm/dt/sidebarius)
 ![NPM Downloads (montly)](https://img.shields.io/npm/dm/sidebarius)
 
-**Sidebarius** is a **lightweight**, **dependency-free** JavaScript tool for creating a "sticky" sidebar that adapts to scroll movements. This allows for dynamic interfaces with elements that stay in view as the user scrolls the page.
+**Sidebarius** is a **lightweight**, **zero-dependency** JavaScript tool that makes sidebars sticky and scrollable.
 
 ## [Demo](https://phenomenonus.github.io/sidebarius/) 👈
 
 ## Table of Contents
 
 - [Installation](#installation)
+- [API](#api)
 - [Usage](#usage)
   - [Vanilla JS](#vanilla-js)
   - [React Typescript](#react-typescript)
-- [API](#api)
 - [Limitations](#limitations)
+- [Concept](#concept)
 - [Development](#development)
-  - [Commit Message Guidelines](#commit-message-guidelines)
+  - [Building](#building)
+  - [Commit Message Convention](#commit-message-convention)
 - [Links](#links)
 - [Copyright and license](#copyright-and-license)
 
@@ -31,6 +33,102 @@ Install the package via npm:
 ```bash
 npm install sidebarius
 ```
+
+---
+
+## API
+
+| Method                             | Description                                                 |
+| ---------------------------------- | ----------------------------------------------------------- |
+| `start()`                          | Starts the sticky scrolling behavior.                       |
+| `stop()`                           | Stops the sticky scrolling behavior.                        |
+| `setSpaces(spaceBottom, spaceTop)` | Sets the distance to the collider and triggers a re-render. |
+
+---
+
+### Constructor Parameters
+
+```ts
+constructor(
+  container: HTMLElement,      // See Concept section below
+  containerInner: HTMLElement, // See Concept section below
+  spaceBottom?: number,        // by default 0
+  spaceTop?: number,           // by default 0
+  callback?: Function          // See Callback section below
+);
+```
+
+**Examples**
+
+```ts
+// Minimal
+new Sidebarius(container, containerInner);
+
+// Set spaces
+new Sidebarius(container, containerInner, 16, 8);
+
+// With Callback
+new Sidebarius(container, containerInner, 0, 0, (state, direction, strategy) => {
+  console.log(state, direction, strategy);
+});
+```
+
+| Parameter        | Type        | Description                                                                         |
+| ---------------- | ----------- | ----------------------------------------------------------------------------------- |
+| `container`      | HTMLElement | The parent element (Container) that holds the sticky element.                       |
+| `containerInner` | HTMLElement | The element endowed with stickiness and scrolling abilities relative to its parent. |
+| `spaceBottom`    | number      | The space between the bottom of the viewport and the visible area. Default is 0.    |
+| `spaceTop`       | number      | The space between the top of the viewport and the visible area. Default is 0.       |
+| `callback`       | Function    | A function called **before** changes to the ContainerInner occur. See [Callback]()  |
+
+---
+
+### Callback
+
+```ts
+type Callback = (state: State, direction: Direction, strategy: Strategy) => void;
+```
+
+> See also: [State](#state), [Direction](#direction), [Strategy](#strategy)
+
+---
+
+### State
+
+Defines the positioning states of the ContainerInner.
+
+| Value | Description                                                                                        |
+| ----- | -------------------------------------------------------------------------------------------------- |
+| 0     | None: Default behavior of ContainerInner.                                                          |
+| 1     | ContainerBottom: ContainerInner is affixed to the bottom of the Container.                         |
+| 2     | ColliderTop: ContainerInner is fixed at the top of the viewport area, including SpaceTop.          |
+| 3     | ColliderBottom: ContainerInner is fixed at the bottom of the viewport area, including SpaceBottom. |
+| 4     | TranslateY: ContainerInner is offset along the Y-axis relative to the Container.                   |
+| 5     | Rest: Rendering is paused until the state changes.                                                 |
+
+---
+
+### Direction
+
+Defines the direction of the viewport.
+
+| Value | Description                            |
+| ----- | -------------------------------------- |
+| 0     | None: No movement in the viewport.     |
+| 1     | Down: The viewport is moving downward. |
+| 2     | Up: The viewport is moving upward.     |
+
+---
+
+### Strategy
+
+Defines the sticky behavior strategy.
+
+| Value | Description                                                   |
+| ----- | ------------------------------------------------------------- |
+| 0     | None: No sticky behavior is applied.                          |
+| 1     | Both: Sticky behavior is applied on both edges of the Y-axis. |
+| 2     | Top: Sticky behavior is applied only at the top edge.         |
 
 ---
 
@@ -50,11 +148,11 @@ npm install sidebarius
 <!-- <script src="./sidebarius.iife.min.js"></script> -->
 
 <script type="module">
-  import Sidebarius from './sidebarius.esm.min.js'; // Or use the global import (see commented line above)
+  import Sidebarius from "./sidebarius.esm.min.js"; // Or use the global import (see commented line above)
 
   const sidebarius = new Sidebarius(
-    document.getElementById('container'),
-    document.getElementById('container_inner'),
+    document.getElementById("container"),
+    document.getElementById("container_inner"),
     16, // spaceBottom (optional, default is 0)
     16, // spaceTop (optional, default is 0)
     callback, // optional callback
@@ -63,9 +161,9 @@ npm install sidebarius
   sidebarius.start();
 
   function callback(state, direction, strategy) {
-    console.log('STATE: ' + ['None', 'ContainerBottom', 'ColliderTop', 'ColliderBottom', 'TranslateY', 'Rest'][state]);
-    console.log('DIRECTION: ' + ['None', 'Down', 'Up'][direction]);
-    console.log('STRATEGY: ' + ['None', 'Both', 'Top'][strategy]);
+    console.log("STATE: " + ["None", "ContainerBottom", "ColliderTop", "ColliderBottom", "TranslateY", "Rest"][state]);
+    console.log("DIRECTION: " + ["None", "Down", "Up"][direction]);
+    console.log("STRATEGY: " + ["None", "Both", "Top"][strategy]);
   }
 </script>
 ```
@@ -128,87 +226,6 @@ export default Sidebar;
 
 ---
 
-## API
-
-| Method                             | Description                                                 |
-| ---------------------------------- | ----------------------------------------------------------- |
-| `start()`                          | Starts the sticky scrolling behavior.                       |
-| `stop()`                           | Stops the sticky scrolling behavior.                        |
-| `setSpaces(bottomSpace, spaceTop)` | Sets the distance to the collider and triggers a re-render. |
-
----
-
-### Constructor Parameters
-
-```javascript
-constructor(
-  container: HTMLElement,
-  containerInner: HTMLElement,
-  spaceBottom: number = 0,
-  spaceTop: number = 0,
-  callback: Callback = () => {}
-);
-```
-
-| Parameter        | Type        | Description                                                                         |
-| ---------------- | ----------- | ----------------------------------------------------------------------------------- |
-| `container`      | HTMLElement | The parent element (Container) that holds the sticky element.                       |
-| `containerInner` | HTMLElement | The element endowed with stickiness and scrolling abilities relative to its parent. |
-| `spaceBottom`    | number      | The space between the bottom of the viewport and the visible area. Default is 0.    |
-| `spaceTop`       | number      | The space between the top of the viewport and the visible area. Default is 0.       |
-| `callback`       | Callback    | A function called **before** changes to the ContainerInner occur. See [Callback]()  |
-
----
-
-### Callback
-
-```ts
-type Callback = (state: State, direction: Direction, strategy: Strategy) => void;
-```
-
-> See also: [State](#state), [Direction](#direction), [Strategy](#strategy)
-
----
-
-### State
-
-Defines the positioning states of the ContainerInner.
-
-| Value | Description                                                                                        |
-| ----- | -------------------------------------------------------------------------------------------------- |
-| 0     | None: Default behavior of ContainerInner.                                                          |
-| 1     | ContainerBottom: ContainerInner is affixed to the bottom of the Container.                         |
-| 2     | ColliderTop: ContainerInner is fixed at the top of the viewport area, including SpaceTop.          |
-| 3     | ColliderBottom: ContainerInner is fixed at the bottom of the viewport area, including SpaceBottom. |
-| 4     | TranslateY: ContainerInner is offset along the Y-axis relative to the Container.                   |
-| 5     | Rest: Rendering is paused until the state changes.                                                 |
-
----
-
-### Direction
-
-Defines the direction of the viewport.
-
-| Value | Description                            |
-| ----- | -------------------------------------- |
-| 0     | None: No movement in the viewport.     |
-| 1     | Down: The viewport is moving downward. |
-| 2     | Up: The viewport is moving upward.     |
-
----
-
-### Strategy
-
-Defines the sticky behavior strategy.
-
-| Value | Description                                                   |
-| ----- | ------------------------------------------------------------- |
-| 0     | None: No sticky behavior is applied.                          |
-| 1     | Both: Sticky behavior is applied on both edges of the Y-axis. |
-| 2     | Top: Sticky behavior is applied only at the top edge.         |
-
----
-
 ## Limitations
 
 1. **Container** cannot use the CSS property `padding` (must be 0).
@@ -232,15 +249,28 @@ Defines the sticky behavior strategy.
 
 ## Development
 
-### Commit Message Guidelines
+### Building
+
+```sh
+npm run build
+# expected: dist directory with build files
+```
+
+### Commit Message Convention
 
 - **feat** - new feature
 - **fix** - bug fix
 - **docs** - documentation
 - **style** - formatting, whitespace, no code logic changes
-- **refactor** - code refactoring
+- **refactor** - code refactoring (no feature or fix)
+- **perf** - performance improvement
 - **test** - adding/changing tests
 - **chore** - minor tasks, build process, configuration
+- **build** - changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- **ci** - changes to CI configuration files and scripts (example scopes: Travis, Circle, GitHub Actions)
+- **revert** - reverts a previous commit
+- **wip** - work in progress (temporary, avoid merging)
+- **deps** - upgrade/downgrade dependency versions
 
 **Examples:**
 
@@ -249,6 +279,8 @@ git commit -m "feat: add setSpaces to set top and bottom collider spaces"
 # Or
 git commit -m "docs: add API usage examples"
 ```
+
+> See also [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) and [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ---
 
@@ -270,4 +302,4 @@ git commit -m "docs: add API usage examples"
 
 ## Copyright and license
 
-Copyright 2026 [Mikhail Prugov](https://github.com/phenomenonus). Code released under the [MIT License](./LICENSE).
+Copyright © 2026 [Mikhail Prugov](https://github.com/phenomenonus). Code released under the [MIT License](./LICENSE).

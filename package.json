@@ -1,7 +1,7 @@
 {
   "name": "sidebarius",
-  "version": "1.0.2",
-  "description": "Sidebarius is a lightweight JavaScript tool that makes sidebars sticky and scrollable. It is independent of any third-party libraries.",
+  "version": "1.0.3",
+  "description": "Sidebarius is a lightweight, zero-dependency JavaScript tool that makes sidebars sticky and scrollable.",
   "author": "Mikhail Prugov <mikhail.prugov@gmail.com>",
   "license": "MIT",
   "type": "module",

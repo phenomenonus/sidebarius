@@ -90,7 +90,7 @@ const enum State {
   Rest = 5,
 }
 
-type Rules = Pick<CSSStyleDeclaration, 'left' | 'top' | 'position' | 'width' | 'transform'>;
+type Rules = Pick<CSSStyleDeclaration, "left" | "top" | "position" | "width" | "transform">;
 
 /**
  * This callback is called **before** the `ContainerInner` changes, such as resizing, scrolling, or other layout changes.
@@ -108,170 +108,170 @@ const enum Prop {
   /**
    *
    */
-  Callback = 'a',
+  Callback = "a",
 
   /**
    * Height of the {@link https://socs.binus.ac.id/2017/03/09/collision-detection-in-2d-part-2/|collider}.
    */
-  ColliderHeight = 'b',
+  ColliderHeight = "b",
 
   /**
    * Top coordinate of the {@link https://socs.binus.ac.id/2017/03/09/collision-detection-in-2d-part-2/|collider}.
    */
-  ColliderTop = 'c',
+  ColliderTop = "c",
 
   /**
    * Parent element of {@link ContainerInner}.
    */
-  Container = 'd',
+  Container = "d",
 
   /**
    * Bottom coordinate of the {@link Container}.
    */
-  ContainerBottom = 'e',
+  ContainerBottom = "e",
 
   /**
    * Height of the {@link Container}.
    */
-  ContainerHeight = 'f',
+  ContainerHeight = "f",
 
   /**
    * Target element with sticky and scroll abilities.
    */
-  ContainerInner = 'g',
+  ContainerInner = "g",
 
   /**
    * Coordinate by X-axis of the {@link Container}.
    */
-  ContainerLeft = 'h',
+  ContainerLeft = "h",
 
   /**
    * Coordinate by Y-axis of the {@link Container}.
    */
-  ContainerTop = 'i',
+  ContainerTop = "i",
 
   /**
    * Width of the {@link Container}.
    */
-  ContainerWidth = 'j',
+  ContainerWidth = "j",
 
   /**
    * Triggered Event.
    */
-  Event = 'k',
+  Event = "k",
 
   /**
    * Indicates that a render request has already been initiated.
    * @default false
    */
-  IsRunningRequest = 'l',
+  IsRunningRequest = "l",
 
   /**
    * List of available CSS properties. Also is used as default values for rules.
    */
-  ListOfRules = 'o',
+  ListOfRules = "o",
 
   /**
    * The maximum allowable coordinate for {@link ColliderBottom} along the Y-axis in the downward {@link Direction}.
    */
-  MaxBottomWithTranslateY = 'p',
+  MaxBottomWithTranslateY = "p",
 
   /**
    * The maximum allowable coordinate for {@link ColliderTop} along the Y-axis in the upward {@link Direction}.
    */
-  MaxTopWithTranslateY = 'q',
+  MaxTopWithTranslateY = "q",
 
   /**
    * The maximum allowed Y-axis coordinates for {@link ContainerInner} relative to the {@link Container}.
    */
-  MaxTranslateY = 'r',
+  MaxTranslateY = "r",
 
   /**
    * Previous top coordinate of the {@link https://socs.binus.ac.id/2017/03/09/collision-detection-in-2d-part-2/|collider}.
    */
-  PrevColliderTop = 's',
+  PrevColliderTop = "s",
 
   /**
    * Previous coordinate by X-axis of the {@link Container}.
    */
-  PrevContainerLeft = 't',
+  PrevContainerLeft = "t",
 
   /**
    * Previous coordinate by Y-axis of the {@link Container}.
    */
-  PrevContainerTop = 'u',
+  PrevContainerTop = "u",
 
   /**
    * Previous width of the {@link Container}.
    */
-  PrevContainerWidth = 'v',
+  PrevContainerWidth = "v",
 
   /**
    * Previous {@link ContainerInner} height.
    */
-  PrevElementHeight = 'w',
+  PrevElementHeight = "w",
 
   /**
    * Previous space bottom. See also {@link SpaceBottom}.
    * @default 0
    */
-  PrevSpaceBottom = 'x',
+  PrevSpaceBottom = "x",
 
   /**
    * Previous space top. See also {@link SpaceTop}.
    * @default 0
    */
-  PrevSpaceTop = 'y',
+  PrevSpaceTop = "y",
 
   /**
    * Previous {@link State}.
    * @default State.None
    */
-  PrevState = 'z',
+  PrevState = "z",
 
   /**
    * Previous strategy. See also {@link Strategy}.
    * @default Strategy.None
    */
-  PrevStrategy = 'A',
+  PrevStrategy = "A",
 
   /**
    * Previous coordinate by X-axis of the {@link https://developer.mozilla.org/en-US/docs/Glossary/Viewport|viewport}.
    */
-  PrevViewportScrollX = 'B',
+  PrevViewportScrollX = "B",
 
   /**
    * Previous coordinate by Y-axis of the {@link https://developer.mozilla.org/en-US/docs/Glossary/Viewport|viewport}.
    */
-  PrevViewportScrollY = 'C',
+  PrevViewportScrollY = "C",
 
   /**
    *  Resize observer.
    */
-  ResizeObserver = 'D',
+  ResizeObserver = "D",
 
   /**
    * Space bottom.
    * @default 0
    */
-  SpaceBottom = 'E',
+  SpaceBottom = "E",
 
   /**
    * Space top.
    * @default 0
    */
-  SpaceTop = 'F',
+  SpaceTop = "F",
 
   /**
    * Current {@link Strategy}. Helps to detect {@link Prop.ContainerInner|ContainerInner} behaviour.
    * @default Strategy.None
    */
-  Strategy = 'G',
+  Strategy = "G",
 
   /**
    * The Current Y-axis coordinates relative to the {@link Prop.Container|Container}.
    */
-  TranslateY = 'H',
+  TranslateY = "H",
 }
 
 /**
@@ -281,77 +281,77 @@ const enum Method {
   /**
    * Add required event listeners. See {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener|addEventListener} and {@link https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver|ResizeObserver}.
    */
-  AddListeners = 'I',
+  AddListeners = "I",
 
   /**
    * Calculate {@link https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements|dimensions}.
    */
-  CalcDims = 'J',
+  CalcDims = "J",
 
   /**
    * Calculate {@link https://developer.mozilla.org/en-US/docs/Web/CSS/CSSOM_view/Coordinate_systems|coordinates}.
    */
-  CalcScroll = 'K',
+  CalcScroll = "K",
 
   /**
    * Get coordinates for passed element.
    */
-  GetCoords = 'L',
+  GetCoords = "L",
 
   /**
    * Get the scroll direction. `None` for horizontal scrolling or no scrolling.
    */
-  GetDirection = 'M',
+  GetDirection = "M",
 
   /**
    * Get state of {@link Prop.ContainerInner|ContainerInner}.
    */
-  GetState = 'N',
+  GetState = "N",
 
   /**
    * Get a {@link Prop.Strategy} that determines the further behavior of the {@link Prop.ContainerInner|ContainerInner}.
    */
-  GetStrategy = 'O',
+  GetStrategy = "O",
 
   /**
    * Initialize(or reset) properties to default values.
    */
-  Init = 'P',
+  Init = "P",
 
   /**
    * Observe {@link https://developer.mozilla.org/en-US/docs/Web/API/Node|nodes} from {@link Prop.ContainerInner|ContainerInner} to {@link https://developer.mozilla.org/en-US/docs/Web/API/Document/body|document body} with help the {@link https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver|ResizeObserver}.
    */
-  ObserveTreeNodesFromCurrentToBody = 'Q',
+  ObserveTreeNodesFromCurrentToBody = "Q",
 
   /**
    * Remove all event listeners. See {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener|removeEventListener} and {@link https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver|ResizeObserver}.
    */
-  RemoveListeners = 'R',
+  RemoveListeners = "R",
 
   /**
    * Update styles in {@link Prop.ContainerInner|ContainerInner} and {@link Prop.Container|Container}.
    */
-  Render = 'S',
+  Render = "S",
 
   /**
    * Helps apply DOM manipulation and synchronize processing with rendering. See {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame|requestAnimationFrame}.
    */
-  Request = 'T',
+  Request = "T",
 
   /**
    * Resize listener.
    */
-  ResizeListener = 'U',
+  ResizeListener = "U",
 
   /**
    * Scroll listener.
    */
-  ScrollListener = 'V',
+  ScrollListener = "V",
 }
 
 /**
  * Sidebarius
- * @version 1.0.2
+ * @version 1.0.3
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026
@@ -409,7 +409,7 @@ export default class Sidebarius {
 
     t[Prop.Container] = container;
     t[Prop.ContainerInner] = containerInner;
-    t[Prop.ListOfRules] = { left: '', top: '', position: '', width: '', transform: '' };
+    t[Prop.ListOfRules] = { left: "", top: "", position: "", width: "", transform: "" };
     t[Prop.PrevSpaceBottom] = t[Prop.SpaceBottom] = spaceBottom;
     t[Prop.PrevSpaceTop] = t[Prop.SpaceTop] = spaceTop;
     t[Prop.Callback] = callback;
@@ -494,7 +494,7 @@ export default class Sidebarius {
   private [Method.GetCoords](element: HTMLElement): TypeElementCoords {
     const coords = { left: element.offsetLeft, top: element.offsetTop };
     let i = 0;
-    while (((element as unknown) = 'BODY' === element.tagName ? element.parentElement : element.offsetParent)) {
+    while (((element as unknown) = "BODY" === element.tagName ? element.parentElement : element.offsetParent)) {
       coords.top += element.offsetTop;
       coords.left += element.offsetLeft;
       i++;
@@ -509,24 +509,24 @@ export default class Sidebarius {
     if (state === State.ContainerBottom) {
       t[Prop.TranslateY] = t[Prop.MaxTranslateY];
       r = {
-        position: 'relative',
+        position: "relative",
         transform: `translate3d(0px, ${t[Prop.TranslateY]}px, 0px)`,
       };
     } else if (state === State.ColliderBottom) {
       t[Prop.TranslateY] = 0;
       r = {
-        top: t[Prop.ColliderHeight] + t[Prop.SpaceTop] - t[Prop.ContainerInner].offsetHeight + 'px',
-        left: t[Prop.ContainerLeft] - window.scrollX + 'px',
-        position: 'fixed',
-        width: t[Prop.ContainerWidth] + 'px',
+        top: t[Prop.ColliderHeight] + t[Prop.SpaceTop] - t[Prop.ContainerInner].offsetHeight + "px",
+        left: t[Prop.ContainerLeft] - window.scrollX + "px",
+        position: "fixed",
+        width: t[Prop.ContainerWidth] + "px",
       };
     } else if (state === State.ColliderTop) {
       t[Prop.TranslateY] = 0;
       r = {
-        left: t[Prop.ContainerLeft] - window.scrollX + 'px',
-        top: t[Prop.SpaceTop] + 'px',
-        position: 'fixed',
-        width: t[Prop.ContainerWidth] + 'px',
+        left: t[Prop.ContainerLeft] - window.scrollX + "px",
+        top: t[Prop.SpaceTop] + "px",
+        position: "fixed",
+        width: t[Prop.ContainerWidth] + "px",
       };
     } else if (state === State.None) {
       t[Prop.TranslateY] = 0;
@@ -540,7 +540,7 @@ export default class Sidebarius {
         t[Prop.TranslateY] = t[Prop.MaxTranslateY];
       }
       r = {
-        position: 'relative',
+        position: "relative",
         transform: `translate3d(0px, ${t[Prop.TranslateY]}px, 0px)`,
       };
     }
@@ -736,13 +736,13 @@ export default class Sidebarius {
   private [Method.ObserveTreeNodesFromCurrentToBody](containerInner: HTMLElement): void {
     while (containerInner) {
       this[Prop.ResizeObserver].observe(containerInner);
-      if (containerInner.tagName === 'BODY') break;
+      if (containerInner.tagName === "BODY") break;
       (containerInner as unknown) = containerInner.parentElement;
     }
   }
 
   private [Method.AddListeners](): void {
-    window.addEventListener('scroll', this[Method.ScrollListener], {
+    window.addEventListener("scroll", this[Method.ScrollListener], {
       capture: false,
       passive: true,
     });
@@ -750,7 +750,7 @@ export default class Sidebarius {
   }
 
   private [Method.RemoveListeners](): void {
-    window.removeEventListener('scroll', this[Method.ScrollListener], {
+    window.removeEventListener("scroll", this[Method.ScrollListener], {
       capture: false,
     });
     this[Prop.ResizeObserver].disconnect();
