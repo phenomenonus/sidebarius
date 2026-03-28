@@ -6,8 +6,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <meta
       name="description"
-      content="Sidebarius is a JavaScript tool for creating a sticky sidebar that adapts to scroll movements. This
-        allows for dynamic interfaces with elements that stay in view as the user scrolls the page."
+      content="Sidebarius is a lightweight, zero-dependency JavaScript tool that makes sidebars sticky and scrollable."
     />
     <meta name="keywords" content="JavaScript, sticky sidebar, UI, web development, Sidebarius" />
     <meta name="repository" content="https://github.com/phenomenonus/sidebarius" />
@@ -17,11 +16,10 @@
   </head>
   <body>
     <header>
-      <h1>Demo</h1>
+      <h1>Sidebarius</h1>
 
       <p class="desk">
-        <b>Sidebarius</b> is a JavaScript tool for creating a "sticky" sidebar that adapts to scroll movements. This
-        allows for dynamic interfaces with elements that stay in view as the user scrolls the page.
+        <b>Sidebarius</b> is a lightweight, zero-dependency JavaScript tool that makes sidebars sticky and scrollable.
       </p>
     </header>
 
@@ -61,9 +59,12 @@
               </p>
               <hr />
               <p>
-                The <b>Container</b> does not prevent changes in width of the <b>ContainerInner</b>; instead, it
-                inherits its width from the <b>Container</b> when in the state of <b>ColliderTop</b> or
-                <b>ColliderBottom</b>.
+                The <b>Container</b> does not block <code>width</code> changes in <b>ContainerInner</b>.
+                <b>ContainerInner</b> inherits its <code>width</code> from the <b>Container</b>.
+                <code>Width</code> changes always originate from the <b>Container</b>, because
+                <b>ContainerInner</b> needs to read the <b>Container’s</b> <code>width</code> when it switches to
+                <code>fixed</code>
+                positioning.
               </p>
               <hr />
               <p>
@@ -81,9 +82,9 @@
                 cannot exceed the boundaries set by the <b>Container</b>.
               </p>
               <hr />
-              <center style="margin-block: 1rem">
+              <div style="margin-block: 1rem; text-align: center">
                 <a href="https://www.npmjs.com/package/sidebarius" style="color: inherit">More info ↗️</a>
-              </center>
+              </div>
               <hr />
             </div>
           </div>
@@ -105,27 +106,17 @@
         </ul>
       </section>
     </main>
-    <footer class="darkness">
-      <div>
-        <a
-          href="https://fonts.adobe.com/fonts/courier-new"
-          target="_blank"
-          style="color: #fefefe"
-          rel="noopener noreferrer"
-          >Courier New</a
-        >, designed by Adrian Frutiger and Howard Kettler.
-      </div>
-    </footer>
+    <footer class="darkness">Demo page</footer>
 
     <script type="module">
-      import Sidebarius from './sidebarius.esm.min.js';
+      import Sidebarius from "./sidebarius.esm.min.js";
 
-      const statusBar = document.querySelector('.status');
+      const statusBar = document.querySelector(".status");
 
       const callback = (state, direction, strategy) => {
-        const states = ['None', 'ContainerBottom', 'ColliderTop', 'ColliderBottom', 'TranslateY', 'Rest'];
-        const directions = ['None', 'Down', 'Up'];
-        const strategies = ['None', 'Both', 'Top'];
+        const states = ["None", "ContainerBottom", "ColliderTop", "ColliderBottom", "TranslateY", "Rest"];
+        const directions = ["None", "Down", "Up"];
+        const strategies = ["None", "Both", "Top"];
         statusBar.innerHTML = `
         <small><span>STATE:</span><code>${states[state]}</code></small>
         <small><span>DIRECTION:</span> <code>${directions[direction]}</code></small>
@@ -133,8 +124,8 @@
       };
 
       const sidebarius = new Sidebarius(
-        document.getElementById('container'),
-        document.getElementById('container_inner'),
+        document.getElementById("container"),
+        document.getElementById("container_inner"),
         16,
         16,
         callback,
@@ -143,29 +134,29 @@
       sidebarius.start();
 
       // Code for demonstration of activation Sidebarius manualy
-      document.querySelector('.activator').addEventListener('click', (e) => {
-        if (e.target.classList.contains('enabled')) {
-          e.target.innerHTML = 'Enable Sidebarius';
-          e.target.classList.remove('enabled');
+      document.querySelector(".activator").addEventListener("click", (e) => {
+        if (e.target.classList.contains("enabled")) {
+          e.target.innerHTML = "Enable Sidebarius";
+          e.target.classList.remove("enabled");
           sidebarius.stop();
         } else {
-          e.target.innerHTML = 'Disable Sidebarius';
-          e.target.classList.add('enabled');
+          e.target.innerHTML = "Disable Sidebarius";
+          e.target.classList.add("enabled");
           sidebarius.start();
         }
       });
 
       // Code for demonstration different sizes of Sidebar
-      const expandBlock = document.querySelector('.expand-block');
-      document.querySelector('.toggle-btn').addEventListener('click', (e) => {
-        if (expandBlock.classList.contains('expanded')) {
-          e.target.innerHTML = 'Expand ⌄';
-          expandBlock.classList.remove('expanded');
+      const expandBlock = document.querySelector(".expand-block");
+      document.querySelector(".toggle-btn").addEventListener("click", (e) => {
+        if (expandBlock.classList.contains("expanded")) {
+          e.target.innerHTML = "Expand ⌄";
+          expandBlock.classList.remove("expanded");
           expandBlock.style.maxHeight = 0;
         } else {
-          e.target.innerHTML = 'Collapse ⌃';
-          expandBlock.classList.add('expanded');
-          expandBlock.style.maxHeight = expandBlock.scrollHeight + 'px';
+          e.target.innerHTML = "Collapse ⌃";
+          expandBlock.classList.add("expanded");
+          expandBlock.style.maxHeight = expandBlock.scrollHeight + "px";
         }
       });
     </script>
