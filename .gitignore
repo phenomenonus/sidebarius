@@ -1,4 +1,2 @@
-/node_modules
-
-# Ignore demo files
-/demo
+node_modules/
+dist/
