@@ -249,6 +249,8 @@ export default Sidebar;
 
 ## Development
 
+Follow the conventions/practices/rules described in [this repository](https://github.com/phenomenonus/development-guidelines/blob/main/README.md).
+
 ### Building
 
 ```sh
@@ -256,36 +258,11 @@ npm run build
 # expected: dist directory with build files
 ```
 
-### Commit Message Convention
-
-- **feat** - new feature
-- **fix** - bug fix
-- **docs** - documentation
-- **style** - formatting, whitespace, no code logic changes
-- **refactor** - code refactoring (no feature or fix)
-- **perf** - performance improvement
-- **test** - adding/changing tests
-- **chore** - minor tasks, build process, configuration
-- **build** - changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-- **ci** - changes to CI configuration files and scripts (example scopes: Travis, Circle, GitHub Actions)
-- **revert** - reverts a previous commit
-- **wip** - work in progress (temporary, avoid merging)
-- **deps** - upgrade/downgrade dependency versions
-
-**Examples:**
-
-```bash
-git commit -m "feat: add setSpaces to set top and bottom collider spaces"
-# Or
-git commit -m "docs: add API usage examples"
-```
-
-> See also [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) and [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
-
 ---
 
 ## Links
 
+- [development-guidelines](https://github.com/phenomenonus/development-guidelines)
 - [DOM](https://developer.mozilla.org/en-US/docs/Glossary/DOM)
 - [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
 - [dimensions of elements](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements)
