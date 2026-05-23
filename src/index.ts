@@ -21,13 +21,11 @@ const enum Event {
 /**
  * Defines `viewport` direction.
  */
-const Direction = {
-  None: 0,
-  Down: 1,
-  Up: 2,
-} as const;
-
-export type Direction = (typeof Direction)[keyof typeof Direction];
+export const enum Direction {
+  None = 0,
+  Down = 1,
+  Up = 2,
+}
 
 /**
  * The element coordinates.
@@ -40,61 +38,57 @@ type TypeElementCoords = {
 /**
  * Strategy.
  */
-const Strategy = {
+export const enum Strategy {
   /**
    * Nothing do.
    */
-  None: 0,
+  None = 0,
 
   /**
    * Sticky both sides by Y-axis.
    */
-  Both: 1,
+  Both = 1,
 
   /**
    * Sticky only top side.
    */
-  Top: 2,
-} as const;
-
-export type Strategy = (typeof Strategy)[keyof typeof Strategy];
+  Top = 2,
+}
 
 /**
  * @ enum {number} Position variant of target {@link Prop.ContainerInner|ContainerInner}.
  */
-const State = {
+export const enum State {
   /**
    * Default {@link Prop.ContainerInner|ContainerInner} behavior.
    */
-  None: 0,
+  None = 0,
 
   /**
    * {@link Prop.ContainerInner|ContainerInner} affixed at the bottom of the {@link Prop.Container|Container}.
    */
-  ContainerBottom: 1,
+  ContainerBottom = 1,
 
   /**
    * {@link Prop.ContainerInner|ContainerInner} fixed at the top of the window viewport area (including {@link Prop.SpaceTop|SpaceTop}).
    */
-  ColliderTop: 2,
+  ColliderTop = 2,
 
   /**
    * {@link Prop.ContainerInner|ContainerInner} fixed at the bottom of the window viewport area (including {@link Prop.SpaceBottom|SpaceBottom}).
    */
-  ColliderBottom: 3,
+  ColliderBottom = 3,
 
   /**
    * The {@link Prop.ContainerInner|ContainerInner} is offset along the Y axis relative to the {@link Prop.Container|Container}.
    */
-  TranslateY: 4,
+  TranslateY = 4,
 
   /**
    * Indicates that rendering should be skipped until the state changes.
    */
-  Rest: 5,
-} as const;
-
-export type State = (typeof State)[keyof typeof State];
+  Rest = 5,
+}
 
 type Rules = Pick<CSSStyleDeclaration, "left" | "top" | "position" | "width" | "transform">;
 
@@ -357,7 +351,7 @@ const enum Method {
 
 /**
  * Sidebarius
- * @version 1.0.10
+ * @version 1.0.11
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026
