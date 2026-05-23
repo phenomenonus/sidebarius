@@ -1,14 +1,39 @@
 {
   "compilerOptions": {
+    /* Language */
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
-    "declaration": false,
-    "strict": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    /* Resolution */
     "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true,
+
+    /* Output */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": false,
+
+    /* Interop */
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "allowSyntheticDefaultImports": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Build */
+    "isolatedModules": false,
+    "skipLibCheck": true,
+
+    /* Paths */
+    "rootDir": "./src",
+
+    /* Emit handled by Rollup */
+    "noEmit": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

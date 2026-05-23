@@ -21,11 +21,13 @@ const enum Event {
 /**
  * Defines `viewport` direction.
  */
-const enum Direction {
-  None = 0,
-  Down = 1,
-  Up = 2,
-}
+const Direction = {
+  None: 0,
+  Down: 1,
+  Up: 2,
+} as const;
+
+export type Direction = (typeof Direction)[keyof typeof Direction];
 
 /**
  * The element coordinates.
@@ -38,57 +40,61 @@ type TypeElementCoords = {
 /**
  * Strategy.
  */
-const enum Strategy {
+const Strategy = {
   /**
    * Nothing do.
    */
-  None = 0,
+  None: 0,
 
   /**
    * Sticky both sides by Y-axis.
    */
-  Both = 1,
+  Both: 1,
 
   /**
    * Sticky only top side.
    */
-  Top = 2,
-}
+  Top: 2,
+} as const;
+
+export type Strategy = (typeof Strategy)[keyof typeof Strategy];
 
 /**
  * @ enum {number} Position variant of target {@link Prop.ContainerInner|ContainerInner}.
  */
-const enum State {
+const State = {
   /**
    * Default {@link Prop.ContainerInner|ContainerInner} behavior.
    */
-  None = 0,
+  None: 0,
 
   /**
    * {@link Prop.ContainerInner|ContainerInner} affixed at the bottom of the {@link Prop.Container|Container}.
    */
-  ContainerBottom = 1,
+  ContainerBottom: 1,
 
   /**
    * {@link Prop.ContainerInner|ContainerInner} fixed at the top of the window viewport area (including {@link Prop.SpaceTop|SpaceTop}).
    */
-  ColliderTop = 2,
+  ColliderTop: 2,
 
   /**
    * {@link Prop.ContainerInner|ContainerInner} fixed at the bottom of the window viewport area (including {@link Prop.SpaceBottom|SpaceBottom}).
    */
-  ColliderBottom = 3,
+  ColliderBottom: 3,
 
   /**
    * The {@link Prop.ContainerInner|ContainerInner} is offset along the Y axis relative to the {@link Prop.Container|Container}.
    */
-  TranslateY = 4,
+  TranslateY: 4,
 
   /**
    * Indicates that rendering should be skipped until the state changes.
    */
-  Rest = 5,
-}
+  Rest: 5,
+} as const;
+
+export type State = (typeof State)[keyof typeof State];
 
 type Rules = Pick<CSSStyleDeclaration, "left" | "top" | "position" | "width" | "transform">;
 
@@ -99,7 +105,7 @@ type Rules = Pick<CSSStyleDeclaration, "left" | "top" | "position" | "width" | "
  * @param {number} direction - The `viewport` {@link Direction}. Defines the direction of movement of the viewport.
  * @param {number} strategy - The {@link Strategy} that determines the positioning behaviour, based on the sizes of both `Container` and `ContainerInner`.
  */
-type Callback = (state: State, direction: Direction, strategy: Strategy) => void;
+export type Callback = (state: State, direction: Direction, strategy: Strategy) => void;
 
 /**
  * Properties
@@ -351,13 +357,13 @@ const enum Method {
 
 /**
  * Sidebarius
- * @version 1.0.3
+ * @version 1.0.9
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026
  * @license The MIT License (MIT)
  */
-export default class Sidebarius {
+export class Sidebarius {
   private [Prop.Callback]!: Callback;
   private [Prop.ColliderHeight]!: number;
   private [Prop.ColliderTop]!: number;
@@ -756,3 +762,5 @@ export default class Sidebarius {
     this[Prop.ResizeObserver].disconnect();
   }
 }
+
+export default Sidebarius;

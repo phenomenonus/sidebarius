@@ -200,13 +200,13 @@ createRoot(document.getElementById("root")!).render(
 
 ## Concept
 
-![Preview](./assets/concept.jpg)
+![Preview](./docs/assets/concept.jpg)
 
 > [Viewport concepts](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/CSSOM_view/Viewport_concepts) | [Viewport](https://www.w3.org/TR/CSS2/visuren.html#viewport) | [Collider](https://socs.binus.ac.id/2017/03/09/collision-detection-in-2d-part-2/)
 
 ---
 
-![Strategy](./assets/strategy.jpg)
+![Strategy](./docs/assets/strategy.jpg)
 
 > [Strategy](#strategy)
 
