@@ -20,7 +20,6 @@
 - [Concept](#concept)
 - [Development](#development)
   - [Building](#building)
-  - [Commit Message Convention](#commit-message-convention)
 - [Links](#links)
 - [Copyright and license](#copyright-and-license)
 
