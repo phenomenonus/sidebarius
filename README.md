@@ -13,6 +13,8 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Before use](#before-use)
+  - [Examples](#examples)
 - [Concept](#concept)
 - [API](#api)
   - [Constructor Parameters](#constructor-parameters)
