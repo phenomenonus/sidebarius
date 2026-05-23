@@ -12,16 +12,20 @@
 ## Table of Contents
 
 - [Installation](#installation)
-- [API](#api)
 - [Usage](#usage)
-  - [Vanilla JS](#vanilla-js)
-  - [React Typescript](#react-typescript)
-- [Limitations](#limitations)
 - [Concept](#concept)
+- [API](#api)
+  - [Constructor Parameters](#constructor-parameters)
+  - [Methods](#methods)
+  - [Types](#types)
+    - [State](#state)
+    - [Direction](#direction)
+    - [Strategy](#strategy)
+    - [Callback](#callback)
 - [Development](#development)
   - [Building](#building)
 - [Links](#links)
-- [Copyright and license](#copyright-and-license)
+- [Copyright and License](#copyright-and-license)
 
 ---
 
@@ -35,15 +39,180 @@ npm install sidebarius
 
 ---
 
-## API
+## Usage
 
-| Method                             | Description                                                 |
-| ---------------------------------- | ----------------------------------------------------------- |
-| `start()`                          | Starts the sticky scrolling behavior.                       |
-| `stop()`                           | Stops the sticky scrolling behavior.                        |
-| `setSpaces(spaceBottom, spaceTop)` | Sets the distance to the collider and triggers a re-render. |
+### Before use
+
+1. **Container** cannot use the CSS property `padding` (must be 0).
+2. **ContainerInner** cannot use the CSS property `margin` (must be 0).
+
+> Note: `ContainerInner` always relies on the `Container`'s width and updates to match it whenever that width changes. How the `Container`'s width is set doesn't matter — only that it is explicitly defined; that lets `ContainerInner` switch to position: absolute/fixed without affecting the `Container`'s own width.
 
 ---
+
+### Examples
+
+<details>
+<summary>Vanilla JS</summary>
+
+```html
+<main>
+  <aside id="container">
+    <div id="container_inner"><!-- Sidebar content --></div>
+  </aside>
+  <section><!-- Section content --></section>
+</main>
+
+<!-- Import globally, or use ES Modules as shown below -->
+<!-- <script src="./sidebarius.iife.min.js"></script> -->
+
+<script type="module">
+  import Sidebarius from "./sidebarius.esm.min.js"; // Or use the global import (see commented line above)
+
+  const sidebarius = new Sidebarius(
+    document.getElementById("container"),
+    document.getElementById("container_inner"),
+    16, // spaceBottom (optional, default is 0)
+    16, // spaceTop (optional, default is 0)
+  );
+
+  sidebarius.start();
+</script>
+```
+
+> [Latest release](https://github.com/phenomenonus/sidebarius/releases/latest/)
+
+</details>
+
+<details>
+<summary>React TypeScript</summary>
+
+```ts
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import Sidebarius, { type Callback, type Direction, type State, type Strategy } from "sidebarius";
+
+type SidebarContainerProps = React.HTMLAttributes<HTMLDivElement> & {
+  style?: Omit<React.CSSProperties, "padding">;
+};
+
+type SidebarContainerInnerProps = React.HTMLAttributes<HTMLDivElement> & {
+  style?: Omit<React.CSSProperties, "margin">;
+};
+
+type SidebarProps = React.PropsWithChildren<{
+  container?: SidebarContainerProps;
+  containerInner?: SidebarContainerInnerProps;
+}>;
+
+const Sidebar: React.FC<SidebarProps> = ({ container = {}, containerInner = {}, children }) => {
+  const containerRef = React.useRef<HTMLElement | null>(null);
+  const containerInnerRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    if (!containerRef.current || !containerInnerRef.current) return;
+
+    const callback: Callback = (state: State, direction: Direction, strategy: Strategy) => {
+      console.log("STATE: " + ["None", "ContainerBottom", "ColliderTop", "ColliderBottom", "TranslateY", "Rest"][state]);
+      console.log("DIRECTION: " + ["None", "Down", "Up"][direction]);
+      console.log("STRATEGY: " + ["None", "Both", "Top"][strategy]);
+    };
+
+    const sidebarius = new Sidebarius(
+      containerRef.current,
+      containerInnerRef.current,
+      16, // spaceBottom
+      16, // spaceTop
+      callback, // The callback function will be called every time the sidebar state/direction/strategy changes
+    );
+
+    sidebarius.start();
+
+    return () => {
+      sidebarius.stop();
+    };
+  }, []);
+
+  return (
+    <aside
+      ref={containerRef}
+      {...container}
+    >
+      <div
+        ref={containerInnerRef}
+        {...containerInner}
+      >
+        {children}
+      </div>
+    </aside>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <header style={{ paddingBlock: 24 }}>Header Content</header>
+      <div style={{ display: "flex", gap: 10, maxWidth: 1200, margin: "auto" }}>
+        <Sidebar
+          container={{ style: { width: 240, flexShrink: 0 } }}
+          containerInner={{ style: { border: "1px solid gray", padding: 10, boxSizing: "border-box" } }}
+        >
+          <h3>Sidebar</h3>
+          <p>
+            Read <a href="https://github.com/phenomenonus/sidebarius/blob/main/README.md#usage">Usage</a> section in
+            README.md for more details
+          </p>
+          {new Array(7).fill(null).map((_, i) => (
+            <h2
+              key={i}
+              style={{ marginTop: 200 }}
+            >
+              Sidebar content {i}
+            </h2>
+          ))}
+        </Sidebar>
+        <div style={{ flexGrow: 1, padding: 10, border: "1px solid gray" }}>
+          {"SIDEBARIUS".split("").map((letter, index) => (
+            <div
+              key={index}
+              style={{ marginBlock: 128, fontSize: 96 }}
+            >
+              {letter}
+            </div>
+          ))}
+        </div>
+      </div>
+      <footer style={{ textAlign: "center", paddingBlock: 24, height: 2000 }}>Footer Content</footer>
+    </div>
+  );
+};
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+```
+
+</details>
+
+---
+
+## Concept
+
+![Preview](./assets/concept.jpg)
+
+> [Viewport concepts](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/CSSOM_view/Viewport_concepts) | [Viewport](https://www.w3.org/TR/CSS2/visuren.html#viewport) | [Collider](https://socs.binus.ac.id/2017/03/09/collision-detection-in-2d-part-2/)
+
+---
+
+![Strategy](./assets/strategy.jpg)
+
+> [Strategy](#strategy)
+
+---
+
+## API
 
 ### Constructor Parameters
 
@@ -82,17 +251,19 @@ new Sidebarius(container, containerInner, 0, 0, (state, direction, strategy) => 
 
 ---
 
-### Callback
+### Methods
 
-```ts
-type Callback = (state: State, direction: Direction, strategy: Strategy) => void;
-```
-
-> See also: [State](#state), [Direction](#direction), [Strategy](#strategy)
+| Method                             | Description                                                 |
+| ---------------------------------- | ----------------------------------------------------------- |
+| `start()`                          | Starts the sticky scrolling behavior.                       |
+| `stop()`                           | Stops the sticky scrolling behavior.                        |
+| `setSpaces(spaceBottom, spaceTop)` | Sets the distance to the collider and triggers a re-render. |
 
 ---
 
-### State
+### Types
+
+#### State
 
 Defines the positioning states of the ContainerInner.
 
@@ -107,7 +278,7 @@ Defines the positioning states of the ContainerInner.
 
 ---
 
-### Direction
+#### Direction
 
 Defines the direction of the viewport.
 
@@ -119,7 +290,7 @@ Defines the direction of the viewport.
 
 ---
 
-### Strategy
+#### Strategy
 
 Defines the sticky behavior strategy.
 
@@ -131,118 +302,13 @@ Defines the sticky behavior strategy.
 
 ---
 
-## Usage
-
-### Vanilla JS
-
-```html
-<main>
-  <aside id="container">
-    <div id="container_inner"><!-- Sidebar content --></div>
-  </aside>
-  <section><!-- Section content --></section>
-</main>
-
-<!-- Import globally, or use ES Modules as shown below -->
-<!-- <script src="./sidebarius.iife.min.js"></script> -->
-
-<script type="module">
-  import Sidebarius from "./sidebarius.esm.min.js"; // Or use the global import (see commented line above)
-
-  const sidebarius = new Sidebarius(
-    document.getElementById("container"),
-    document.getElementById("container_inner"),
-    16, // spaceBottom (optional, default is 0)
-    16, // spaceTop (optional, default is 0)
-    callback, // optional callback
-  );
-
-  sidebarius.start();
-
-  function callback(state, direction, strategy) {
-    console.log("STATE: " + ["None", "ContainerBottom", "ColliderTop", "ColliderBottom", "TranslateY", "Rest"][state]);
-    console.log("DIRECTION: " + ["None", "Down", "Up"][direction]);
-    console.log("STRATEGY: " + ["None", "Both", "Top"][strategy]);
-  }
-</script>
-```
-
-> [Latest release](https://github.com/phenomenonus/sidebarius/releases/latest/)
-
----
-
-### React Typescript
+#### Callback
 
 ```ts
-import React, { useRef, useEffect, FC, HTMLAttributes, CSSProperties } from 'react';
-import Sidebarius from 'sidebarius';
-
-type SidebarContainerProps = Omit<HTMLAttributes<HTMLElement>, 'style'> & {
-  style?: Omit<CSSProperties, 'padding'>;
-};
-
-type SidebarContainerInnerProps = Omit<HTMLAttributes<HTMLDivElement>, 'style'> & {
-  style?: Omit<CSSProperties, 'margin'>;
-};
-
-interface SidebarProps {
-  container?: SidebarContainerProps;
-  containerInner?: SidebarContainerInnerProps;
-}
-
-const Sidebar: FC<SidebarProps> = ({ container = {}, containerInner = {}, children }) => {
-  const containerRef = useRef<HTMLElement | null>(null);
-  const containerInnerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!containerRef.current || !containerInnerRef.current) return;
-
-    const sidebarius = new Sidebarius(
-      containerRef.current,
-      containerInnerRef.current,
-      16, // spaceBottom
-      16, // spaceTop
-    );
-
-    sidebarius.start();
-
-    return () => {
-      sidebarius.stop();
-    };
-  }, []);
-
-  return (
-    <aside ref={containerRef} {...container}>
-      <div ref={containerInnerRef} {...containerInner}>
-        {children}
-      </div>
-    </aside>
-  );
-};
-
-export default Sidebar;
+type Callback = (state: State, direction: Direction, strategy: Strategy) => void;
 ```
 
----
-
-## Limitations
-
-1. **Container** cannot use the CSS property `padding` (must be 0).
-2. **ContainerInner** cannot use the CSS property `margin` (must be 0).
-
----
-
-## Concept
-
-![Preview](./assets/concept.jpg)
-
-> [Viewport concepts](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/CSSOM_view/Viewport_concepts) | [Viewport](https://www.w3.org/TR/CSS2/visuren.html#viewport) | [Collider](https://socs.binus.ac.id/2017/03/09/collision-detection-in-2d-part-2/)
-
----
-
-![Strategy](./assets/strategy.jpg)
-
-> [Strategy](#strategy)
+> See also: [State](#state), [Direction](#direction), [Strategy](#strategy)
 
 ---
 
@@ -276,6 +342,6 @@ npm run build
 
 ---
 
-## Copyright and license
+## Copyright and License
 
 Copyright © 2026 [Mikhail Prugov](https://github.com/phenomenonus). Code released under the [MIT License](./LICENSE).
