@@ -198,6 +198,90 @@ createRoot(document.getElementById("root")!).render(
 
 </details>
 
+<details>
+<summary>React TypeScript + Tailwind CSS</summary>
+
+```tsx
+import React from "react";
+import Sidebarius from "sidebarius";
+
+const App: React.FC = () => {
+  const containerRef = React.useRef<HTMLElement | null>(null);
+  const containerInnerRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    if (!containerRef.current || !containerInnerRef.current) return;
+
+    const sidebarius = new Sidebarius(
+      containerRef.current,
+      containerInnerRef.current,
+      16, // spaceBottom
+      16, // spaceTop
+    );
+
+    sidebarius.start();
+
+    return () => {
+      sidebarius.stop();
+    };
+  }, []);
+
+  return (
+    <div className="text-center">
+      <header className="py-6">Header Content</header>
+
+      <div
+        className="grid gap-2.5 max-w-[1200px] mx-auto"
+        style={{ gridTemplateColumns: "240px 1fr" }}
+      >
+        <aside ref={containerRef}>
+          <div
+            ref={containerInnerRef}
+            className="border border-gray-400 p-2"
+          >
+            <h3>Sidebar</h3>
+            <p>
+              Read{" "}
+              <a
+                href="https://github.com/phenomenonus/sidebarius/blob/main/README.md#usage"
+                className="text-blue-600 underline"
+              >
+                Usage
+              </a>{" "}
+              section in README.md for more details
+            </p>
+
+            {new Array(8).fill(null).map((_, i) => (
+              <h2
+                key={i}
+                className="mt-[200px]"
+              >
+                Sidebar content {i}
+              </h2>
+            ))}
+          </div>
+        </aside>
+
+        <main className="flex-grow p-2 border border-gray-400">
+          {"SIDEBARIUS".split("").map((letter, index) => (
+            <div
+              key={index}
+              className="my-[128px] text-[96px]"
+            >
+              {letter}
+            </div>
+          ))}
+        </main>
+      </div>
+
+      <footer className="text-center py-6 h-[2000px]">Footer Content</footer>
+    </div>
+  );
+};
+```
+
+</details>
+
 ---
 
 ## Concept
