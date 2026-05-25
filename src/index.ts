@@ -90,7 +90,7 @@ export const enum State {
   Rest = 5,
 }
 
-type Rules = Pick<CSSStyleDeclaration, "left" | "top" | "position" | "width" | "transform">;
+type Rules = Pick<CSSStyleDeclaration, "left" | "bottom" | "top" | "position" | "width" | "transform">;
 
 /**
  * This callback is called **before** the `ContainerInner` changes, such as resizing, scrolling, or other layout changes.
@@ -351,7 +351,7 @@ const enum Method {
 
 /**
  * Sidebarius
- * @version 1.0.11
+ * @version 1.0.14
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026
@@ -409,7 +409,7 @@ export class Sidebarius {
 
     t[Prop.Container] = container;
     t[Prop.ContainerInner] = containerInner;
-    t[Prop.ListOfRules] = { left: "", top: "", position: "", width: "", transform: "" };
+    t[Prop.ListOfRules] = { left: "", bottom: "", top: "", position: "", width: "", transform: "" };
     t[Prop.PrevSpaceBottom] = t[Prop.SpaceBottom] = spaceBottom;
     t[Prop.PrevSpaceTop] = t[Prop.SpaceTop] = spaceTop;
     t[Prop.Callback] = callback;
@@ -515,7 +515,7 @@ export class Sidebarius {
     } else if (state === State.ColliderBottom) {
       t[Prop.TranslateY] = 0;
       r = {
-        top: t[Prop.ColliderHeight] + t[Prop.SpaceTop] - t[Prop.ContainerInner].offsetHeight + "px",
+        bottom: t[Prop.SpaceBottom] + "px",
         left: t[Prop.ContainerLeft] - window.scrollX + "px",
         position: "fixed",
         width: t[Prop.ContainerWidth] + "px",
@@ -746,11 +746,18 @@ export class Sidebarius {
       capture: false,
       passive: true,
     });
+    window.addEventListener("resize", this[Method.ResizeListener], {
+      capture: false,
+      passive: true,
+    });
     this[Method.ObserveTreeNodesFromCurrentToBody](this[Prop.ContainerInner]);
   }
 
   private [Method.RemoveListeners](): void {
     window.removeEventListener("scroll", this[Method.ScrollListener], {
+      capture: false,
+    });
+    window.removeEventListener("resize", this[Method.ResizeListener], {
       capture: false,
     });
     this[Prop.ResizeObserver].disconnect();
