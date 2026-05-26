@@ -351,11 +351,11 @@ const enum Method {
 
 /**
  * Sidebarius
- * @version 1.0.15
+ * @version 1.0.16
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026
- * @license The MIT License (MIT)
+ * @license The MIT License
  */
 export class Sidebarius {
   private [Prop.Callback]!: Callback;
@@ -446,11 +446,11 @@ export class Sidebarius {
    * @param {number} spaceTop - The {@link Prop.SpaceTop|SpaceTop}.
    */
   public setSpaces(bottomSpace: number, spaceTop: number): void {
-    var s = this;
-    s[Prop.SpaceBottom] = bottomSpace;
-    s[Prop.SpaceTop] = spaceTop;
-    s[Method.Init]();
-    s[Method.ResizeListener]();
+    var t = this;
+    t[Prop.SpaceBottom] = bottomSpace;
+    t[Prop.SpaceTop] = spaceTop;
+    t[Method.Init]();
+    t[Method.ResizeListener]();
   }
 
   private [Method.Init](): void {
@@ -493,40 +493,42 @@ export class Sidebarius {
 
   private [Method.GetCoords](element: HTMLElement): TypeElementCoords {
     const coords = { left: element.offsetLeft, top: element.offsetTop };
-    let i = 0;
     while (((element as unknown) = "BODY" === element.tagName ? element.parentElement : element.offsetParent)) {
       coords.top += element.offsetTop;
       coords.left += element.offsetLeft;
-      i++;
     }
     return coords;
   }
 
   private [Method.Render](state: State): void {
-    var t = this;
-    let r: Partial<Rules> = {};
+    var t = this,
+      u = "px",
+      r = "relative",
+      f = "fixed",
+      s = (y: number) => `translate3d(0px, ${y}px, 0px)`;
+    let o: Partial<Rules> = {};
 
     if (state === State.ContainerBottom) {
       t[Prop.TranslateY] = t[Prop.MaxTranslateY];
-      r = {
-        position: "relative",
-        transform: `translate3d(0px, ${t[Prop.TranslateY]}px, 0px)`,
+      o = {
+        position: r,
+        transform: s(t[Prop.TranslateY]),
       };
     } else if (state === State.ColliderBottom) {
       t[Prop.TranslateY] = 0;
-      r = {
-        bottom: t[Prop.SpaceBottom] + "px",
-        left: t[Prop.ContainerLeft] - window.scrollX + "px",
-        position: "fixed",
-        width: t[Prop.ContainerWidth] + "px",
+      o = {
+        bottom: t[Prop.SpaceBottom] + u,
+        left: t[Prop.ContainerLeft] - window.scrollX + u,
+        position: f,
+        width: t[Prop.ContainerWidth] + u,
       };
     } else if (state === State.ColliderTop) {
       t[Prop.TranslateY] = 0;
-      r = {
-        left: t[Prop.ContainerLeft] - window.scrollX + "px",
-        top: t[Prop.SpaceTop] + "px",
-        position: "fixed",
-        width: t[Prop.ContainerWidth] + "px",
+      o = {
+        left: t[Prop.ContainerLeft] - window.scrollX + u,
+        top: t[Prop.SpaceTop] + u,
+        position: f,
+        width: t[Prop.ContainerWidth] + u,
       };
     } else if (state === State.None) {
       t[Prop.TranslateY] = 0;
@@ -539,15 +541,15 @@ export class Sidebarius {
       } else if (t[Prop.PrevState] === State.ContainerBottom) {
         t[Prop.TranslateY] = t[Prop.MaxTranslateY];
       }
-      r = {
-        position: "relative",
-        transform: `translate3d(0px, ${t[Prop.TranslateY]}px, 0px)`,
+      o = {
+        position: r,
+        transform: s(t[Prop.TranslateY]),
       };
     }
 
     for (const key in t[Prop.ListOfRules]) {
       t[Prop.ContainerInner].style[key as keyof Rules] =
-        r[key as unknown as keyof Rules] ?? t[Prop.ListOfRules][key as unknown as keyof Rules];
+        o[key as unknown as keyof Rules] ?? t[Prop.ListOfRules][key as unknown as keyof Rules];
     }
   }
 
@@ -726,8 +728,8 @@ export class Sidebarius {
     if (t[Prop.IsRunningRequest] === 1) return;
     t[Prop.IsRunningRequest] = 1;
     window.requestAnimationFrame(() => {
-      (t[Prop.Event] === Event.Resize && t[Method.CalcDims]()) ||
-        (t[Prop.Event] === Event.Scroll && t[Method.CalcScroll]());
+      if (t[Prop.Event] === Event.Resize) t[Method.CalcDims]();
+      if (t[Prop.Event] === Event.Scroll) t[Method.CalcScroll]();
       t[Prop.Event] = Event.None;
       t[Prop.IsRunningRequest] = 0;
     });
@@ -742,25 +744,21 @@ export class Sidebarius {
   }
 
   private [Method.AddListeners](): void {
-    window.addEventListener("scroll", this[Method.ScrollListener], {
-      capture: false,
-      passive: true,
-    });
-    window.addEventListener("resize", this[Method.ResizeListener], {
-      capture: false,
-      passive: true,
-    });
-    this[Method.ObserveTreeNodesFromCurrentToBody](this[Prop.ContainerInner]);
+    var t = this,
+      a = window.addEventListener,
+      c = { capture: false, passive: true };
+    a("scroll", t[Method.ScrollListener], c);
+    a("resize", t[Method.ResizeListener], c);
+    t[Method.ObserveTreeNodesFromCurrentToBody](t[Prop.ContainerInner]);
   }
 
   private [Method.RemoveListeners](): void {
-    window.removeEventListener("scroll", this[Method.ScrollListener], {
-      capture: false,
-    });
-    window.removeEventListener("resize", this[Method.ResizeListener], {
-      capture: false,
-    });
-    this[Prop.ResizeObserver].disconnect();
+    var t = this,
+      r = window.removeEventListener,
+      c = { capture: false };
+    r("scroll", t[Method.ScrollListener], c);
+    r("resize", t[Method.ResizeListener], c);
+    t[Prop.ResizeObserver].disconnect();
   }
 }
 
