@@ -327,13 +327,13 @@ new Sidebarius(container, containerInner, 0, 0, (state, direction, strategy) => 
 });
 ```
 
-| Parameter        | Type        | Description                                                                         |
-| ---------------- | ----------- | ----------------------------------------------------------------------------------- |
-| `container`      | HTMLElement | The parent element (Container) that holds the sticky element.                       |
-| `containerInner` | HTMLElement | The element endowed with stickiness and scrolling abilities relative to its parent. |
-| `spaceBottom`    | number      | The space between the bottom of the viewport and the visible area. Default is 0.    |
-| `spaceTop`       | number      | The space between the top of the viewport and the visible area. Default is 0.       |
-| `callback`       | Function    | A function called **before** changes to the ContainerInner occur. See [Callback]()  |
+| Parameter        | Type        | Description                                                                                 |
+| ---------------- | ----------- | ------------------------------------------------------------------------------------------- |
+| `container`      | HTMLElement | The parent element (Container) that holds the sticky element.                               |
+| `containerInner` | HTMLElement | The element endowed with stickiness and scrolling abilities relative to its parent.         |
+| `spaceBottom`    | number      | The space between the bottom of the viewport and the visible area. Default is 0.            |
+| `spaceTop`       | number      | The space between the top of the viewport and the visible area. Default is 0.               |
+| `callback`       | Function    | A function called **before** changes to the ContainerInner occur. See [Callback](#callback) |
 
 ---
 
