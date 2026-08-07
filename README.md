@@ -45,8 +45,8 @@ npm install sidebarius
 
 ### Before use
 
-1. **Container** cannot use the CSS property `padding` (must be 0).
-2. **ContainerInner** cannot use the CSS property `margin` (must be 0).
+1. [Container](#concept) cannot use the CSS property `padding` (must be 0).
+2. [ContainerInner](#concept) cannot use the CSS property `margin` (must be 0).
 
 > Note: `ContainerInner` always relies on the `Container`'s width and updates to match it whenever that width changes. How the `Container`'s width is set doesn't matter — only that it is explicitly defined; that lets `ContainerInner` switch to position: absolute/fixed without affecting the `Container`'s own width.
 
@@ -58,6 +58,7 @@ npm install sidebarius
 <summary>Vanilla JS</summary>
 
 ```html
+<!-- Note: Don't forget to add your own styles for this example. -->
 <main>
   <aside id="container">
     <div id="container_inner"><!-- Sidebar content --></div>
@@ -327,13 +328,13 @@ new Sidebarius(container, containerInner, 0, 0, (state, direction, strategy) => 
 });
 ```
 
-| Parameter        | Type        | Description                                                                                 |
-| ---------------- | ----------- | ------------------------------------------------------------------------------------------- |
-| `container`      | HTMLElement | The parent element (Container) that holds the sticky element.                               |
-| `containerInner` | HTMLElement | The element endowed with stickiness and scrolling abilities relative to its parent.         |
-| `spaceBottom`    | number      | The space between the bottom of the viewport and the visible area. Default is 0.            |
-| `spaceTop`       | number      | The space between the top of the viewport and the visible area. Default is 0.               |
-| `callback`       | Function    | A function called **before** changes to the ContainerInner occur. See [Callback](#callback) |
+| Parameter        | Type        | Description                                                                                                                    |
+| ---------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `container`      | HTMLElement | The parent element ([Container](#concept)) that holds the sticky element.                                                      |
+| `containerInner` | HTMLElement | The element endowed with stickiness and scrolling abilities relative to its parent.                                            |
+| `spaceBottom`    | number      | The space between the bottom of the viewport and the visible area. Default is 0.                                               |
+| `spaceTop`       | number      | The space between the top of the viewport and the visible area. Default is 0.                                                  |
+| `callback`       | Function    | The function is called **before** changes in the positioning behavior of [ContainerInner](#concept). See [Callback](#callback) |
 
 ---
 
@@ -351,16 +352,16 @@ new Sidebarius(container, containerInner, 0, 0, (state, direction, strategy) => 
 
 #### State
 
-Defines the positioning states of the ContainerInner.
+Defines the positioning states of the [ContainerInner](#concept).
 
-| Value | Description                                                                                        |
-| ----- | -------------------------------------------------------------------------------------------------- |
-| 0     | None: Default behavior of ContainerInner.                                                          |
-| 1     | ContainerBottom: ContainerInner is affixed to the bottom of the Container.                         |
-| 2     | ColliderTop: ContainerInner is fixed at the top of the viewport area, including SpaceTop.          |
-| 3     | ColliderBottom: ContainerInner is fixed at the bottom of the viewport area, including SpaceBottom. |
-| 4     | TranslateY: ContainerInner is offset along the Y-axis relative to the Container.                   |
-| 5     | Rest: Rendering is paused until the state changes.                                                 |
+| Value | Description                                                                                                    |
+| ----- | -------------------------------------------------------------------------------------------------------------- |
+| 0     | None: Default behavior of [ContainerInner](#concept).                                                          |
+| 1     | ContainerBottom: [ContainerInner](#concept) is affixed to the bottom of the [Container](#concept).             |
+| 2     | ColliderTop: [ContainerInner](#concept) is fixed at the top of the viewport area, including SpaceTop.          |
+| 3     | ColliderBottom: [ContainerInner](#concept) is fixed at the bottom of the viewport area, including SpaceBottom. |
+| 4     | TranslateY: [ContainerInner](#concept) is offset along the Y-axis relative to the [Container](#concept).       |
+| 5     | Rest: Rendering is paused until the state changes.                                                             |
 
 ---
 
@@ -389,6 +390,8 @@ Defines the sticky behavior strategy.
 ---
 
 #### Callback
+
+The function is called **before** changes in the positioning behavior of [ContainerInner](#concept).
 
 ```ts
 type Callback = (state: State, direction: Direction, strategy: Strategy) => void;

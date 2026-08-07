@@ -351,7 +351,7 @@ const enum Method {
 
 /**
  * Sidebarius
- * @version 1.0.16
+ * @version 1.0.17
  * @link https://github.com/phenomenonus/sidebarius
  * @author Mikhail Prugov
  * @copyright 2026
